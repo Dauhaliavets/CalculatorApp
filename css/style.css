@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+    color: #fff;
+    line-height: 40px;
+}
+
+.main__screen {
+    width: 364px;
+    height: 582px;
+    background-color: #17171C;
+    padding: 25px 20px;
+}
+.container { 
+    width: 324px;
+    height: auto;
+}
+.output__block { 
+    height: 65px;
+    margin-top: 12px;
+    margin-bottom: 30px;
+    font-family: 'Work Sans', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 96px;
+    line-height: 96px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.btns__wrapper { 
+    display: flex;
+    justify-content: space-between;
+}
+.btns__block-main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.btn__clear { 
+    flex-grow: 2;
+    width: calc(50% - 8px);
+    height: 72px;
+    background-color: #2E2F38;
+    border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn__clear:hover {
+    cursor: pointer;
+    background-color: #4E505F;
+}
+
+.btn__backspace { 
+    flex-grow: 2;
+    width: calc(50% - 8px);
+    height: 72px;
+    background-color: #2E2F38;
+    border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn__backspace:hover {
+    cursor: pointer;
+    background-color: #4E505F;
+}
+
+.backspace__icon {
+    width: 32px;
+    height: 32px;
+}
+.btns__block-numbers { 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px;
+}
+.btn__numb { 
+    background-color: #2E2F38;
+    width: 69px;
+    height: 72px;
+    border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.1s ease-in;
+}
+.btn__numb:last-child {
+    width: 100%;
+}
+.btn__numb:hover {
+    cursor: pointer;
+    background-color: #4E505F;
+}
+
+.btns__block-action { 
+    margin-left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.btn__action {
+    width: 69px;
+    height: 72px;
+    background-color: #4B5EFC;
+    border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.1s ease-in;
+}
+.btn__action:hover {
+    cursor: pointer;
+    /* opacity: 0.6; */
+    background-color: rgb(0, 30, 255);
+}
+
