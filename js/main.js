@@ -1,4 +1,5 @@
 'use strict';
+
 const outputBlock = document.querySelector('.output__block');
 const btnClear = document.querySelector('.btn__clear');
 const btnBackspace = document.querySelector('.btn__backspace');
@@ -14,40 +15,11 @@ btnsNumb.forEach((btn) => {
 	});
 });
 
-function addNumbInOutput(btn, output) {
-	let value = btn.textContent;
-	output.textContent += value;
-	checkLengthOutputString(outputBlock);
-}
-
-function checkLengthOutputString(output) {
-	let outputStr = output.textContent;
-	let len = outputStr.length;
-
-	if (len <= 5) {
-		output.style.fontSize = '96px';
-	} else if (len > 5 && len <= 11) {
-		output.style.fontSize = '48px';
-	} else if (len > 11) {
-		output.style.fontSize = '29px';
-	}
-}
-
-for (let i = 0; i < btnsAction.length - 1; i++) {
-	btnsAction[i].addEventListener('click', () => {
-		addOperationInOutput(i);
+btnsAction.forEach((btn) => {
+	btn.addEventListener('click', () => {
+		addOperationInOutput(btn, outputBlock);
 	});
-}
-
-function addOperationInOutput(i) {
-	const isSingleOperation = !outputBlock.textContent.match(REGEXP_OPERATION);
-	let operationValue = btnsAction[i].textContent;
-
-	if (isSingleOperation) {
-		outputBlock.textContent += operationValue;
-		checkLengthOutputString(outputBlock);
-	}
-}
+});
 
 btnClear.addEventListener('click', () => {
 	outputBlock.textContent = '';
@@ -68,29 +40,53 @@ btnActionEquals.addEventListener('click', () => {
 	calc(outputBlock);
 });
 
+function addNumbInOutput(btn, output) {
+	let valueBtn = btn.textContent;
+
+	output.textContent += valueBtn;
+	checkLengthOutputString(output);
+}
+
+function addOperationInOutput(btn, output) {
+	let operationValue = btn.textContent;
+	let outputValue = output.textContent;
+	let isSingleOperation = !outputValue.match(REGEXP_OPERATION);
+
+	if (isSingleOperation) {
+		output.textContent += operationValue;
+		checkLengthOutputString(output);
+	}
+}
+
+function checkLengthOutputString(output) {
+	let outputValue = output.textContent;
+	let len = outputValue.length;
+
+	if (len > 11) {
+		output.style.fontSize = '29px';
+	} else if (len > 5 && len <= 11) {
+		output.style.fontSize = '48px';
+	} else {
+		output.style.fontSize = '96px';
+	}
+}
+
 function calc(output) {
 	const { operation, fNum, sNum } = parseOutputString(output);
+	const isValidParam = !!operation && fNum !== NaN && fNum !== undefined && sNum !== NaN && sNum !== undefined;
 
-    console.log('operation: ', !!operation)
-    console.log('fNum: ', !!fNum)
-    console.log('sNum: ', !!sNum)
-
-    const isValidParam = !!operation && fNum !== NaN && sNum !== NaN && !!sNum;
-
-    if(isValidParam) {
+	if (isValidParam) {
 		const operations = {
 			'−': fNum - sNum,
 			'+': +fNum + +sNum,
 			'×': fNum * sNum,
-			'÷': sNum === 0 ? 'cannot divide by zero' : fNum / sNum,
+			'÷': +sNum === 0 ? 'cannot divide by zero' : fNum / sNum,
 		};
 
-        console.log(operations[operation])
-
-		outputBlock.innerHTML = operations[operation];
+		outputBlock.textContent = operations[operation];
 
 		checkLengthOutputString(outputBlock);
-    }
+	}
 }
 
 function parseOutputString(output) {
@@ -98,7 +94,7 @@ function parseOutputString(output) {
 
 	return {
 		operation: outputStr.match(REGEXP_OPERATION),
-		fNum: +outputStr.split(REGEXP_OPERATION)[0],
-		sNum: +outputStr.split(REGEXP_OPERATION)[1],
+		fNum: outputStr.split(REGEXP_OPERATION)[0],
+		sNum: outputStr.split(REGEXP_OPERATION)[1],
 	};
 }
