@@ -5,7 +5,7 @@ const btnClear = document.querySelector('.btn__clear');
 const btnBackspace = document.querySelector('.btn__backspace');
 const btnsNumb = document.querySelectorAll('.btn__numb');
 const btnsAction = document.querySelectorAll('.btn__action');
-const btnActionEquals = document.querySelector('.btn__action-equals');
+const btnEquals = document.querySelector('.btn__equals');
 
 const REGEXP_OPERATION = /÷|×|\+|−/gm;
 
@@ -27,23 +27,40 @@ btnClear.addEventListener('click', () => {
 });
 
 btnBackspace.addEventListener('click', () => {
-	let value = outputBlock.textContent;
+	let outputValue = outputBlock.textContent;
 
-	if (!!value) {
-		outputBlock.textContent = value.slice(0, -1);
-	} else {
-		checkLengthOutputString(outputBlock);
+	if (!!outputValue) {
+		outputBlock.textContent = outputValue.slice(0, -1);
 	}
+
+	checkLengthOutputString(outputBlock);
 });
 
-btnActionEquals.addEventListener('click', () => {
+btnEquals.addEventListener('click', () => {
 	calc(outputBlock);
 });
 
 function addNumbInOutput(btn, output) {
 	let valueBtn = btn.textContent;
+	let outputStr = output.textContent;
+	let secondPartOutputStr;
 
-	output.textContent += valueBtn;
+	if (outputStr.match(REGEXP_OPERATION) === null) {
+		if (outputStr === '0') {
+			output.textContent = '' + valueBtn;
+		} else {
+			output.textContent += valueBtn;
+		}
+	} else {
+		secondPartOutputStr = outputStr.split(REGEXP_OPERATION)[1];
+		if (secondPartOutputStr === '') {
+			output.textContent += valueBtn;
+		} else if (secondPartOutputStr === '0') {
+			output.textContent = outputStr.slice(0, -1) + valueBtn;
+		} else {
+			output.textContent += valueBtn;
+		}
+	}
 	checkLengthOutputString(output);
 }
 
@@ -73,7 +90,13 @@ function checkLengthOutputString(output) {
 
 function calc(output) {
 	const { operation, fNum, sNum } = parseOutputString(output);
-	const isValidParam = !!operation && fNum !== NaN && fNum !== undefined && sNum !== NaN && sNum !== undefined;
+	
+	const isValidParam =
+		!!operation &&
+		fNum !== NaN &&
+		fNum !== undefined &&
+		sNum !== NaN &&
+		sNum !== undefined;
 
 	if (isValidParam) {
 		const operations = {
