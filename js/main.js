@@ -101,7 +101,7 @@ function calc(output) {
 			'÷': +sNum === 0 ? 'cannot divide by zero' : fNum / sNum,
 		};
 
-		outputBlock.textContent = operations[operation].toFixed(8);
+		outputBlock.textContent = operations[operation];
 	} else {
 		outputBlock.textContent = '0';
 	}
