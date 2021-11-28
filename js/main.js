@@ -90,13 +90,8 @@ function checkLengthOutputString(output) {
 
 function calc(output) {
 	const { operation, fNum, sNum } = parseOutputString(output);
-	
-	const isValidParam =
-		!!operation &&
-		fNum !== NaN &&
-		fNum !== undefined &&
-		sNum !== NaN &&
-		sNum !== undefined;
+
+	const isValidParam = !!operation && fNum !== NaN && fNum !== undefined && sNum !== NaN && sNum !== undefined;
 
 	if (isValidParam) {
 		const operations = {
@@ -106,10 +101,11 @@ function calc(output) {
 			'÷': +sNum === 0 ? 'cannot divide by zero' : fNum / sNum,
 		};
 
-		outputBlock.textContent = operations[operation];
-
-		checkLengthOutputString(outputBlock);
+		outputBlock.textContent = operations[operation].toFixed(8);
+	} else {
+		outputBlock.textContent = '0';
 	}
+	checkLengthOutputString(outputBlock);
 }
 
 function parseOutputString(output) {
