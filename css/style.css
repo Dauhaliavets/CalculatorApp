@@ -123,7 +123,6 @@ body {
 }
 .btn__action:hover {
     cursor: pointer;
-    /* opacity: 0.6; */
     background-color: rgb(0, 30, 255);
 }
 .btn__equals {
@@ -138,7 +137,6 @@ body {
 }
 .btn__equals:hover {
     cursor: pointer;
-    /* opacity: 0.6; */
     background-color: rgb(0, 30, 255);
 }
 

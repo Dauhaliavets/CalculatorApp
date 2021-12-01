@@ -22,23 +22,31 @@ btnsAction.forEach((btn) => {
 });
 
 btnClear.addEventListener('click', () => {
-	outputBlock.textContent = '';
-	checkLengthOutputString(outputBlock);
+	clickClear(outputBlock);
 });
 
 btnBackspace.addEventListener('click', () => {
-	let outputValue = outputBlock.textContent;
-
-	if (!!outputValue) {
-		outputBlock.textContent = outputValue.slice(0, -1);
-	}
-
-	checkLengthOutputString(outputBlock);
+	clickBackspace(outputBlock);
 });
 
 btnEquals.addEventListener('click', () => {
-	calc(outputBlock);
+	calculate(outputBlock);
 });
+
+function clickClear(output){
+	output.textContent = '';
+	checkLengthOutputString(output);
+}
+
+function clickBackspace(output){
+	let outputValue = output.textContent;
+
+	if (!!outputValue) {
+		output.textContent = outputValue.slice(0, -1);
+	}
+
+	checkLengthOutputString(output);
+}
 
 function addNumbInOutput(btn, output) {
 	let valueBtn = btn.textContent;
@@ -88,9 +96,18 @@ function checkLengthOutputString(output) {
 	}
 }
 
-function calc(output) {
-	const { operation, fNum, sNum } = parseOutputString(output);
+function parseOutputString(output) {
+	let outputValue = output.textContent;
 
+	return {
+		operation: outputValue.match(REGEXP_OPERATION),
+		fNum: outputValue.split(REGEXP_OPERATION)[0],
+		sNum: outputValue.split(REGEXP_OPERATION)[1],
+	};
+}
+
+function calculate(output) {
+	const { operation, fNum, sNum } = parseOutputString(output);
 	const isValidParam = !!operation && fNum !== NaN && fNum !== undefined && sNum !== NaN && sNum !== undefined;
 
 	if (isValidParam) {
@@ -106,14 +123,4 @@ function calc(output) {
 		outputBlock.textContent = '0';
 	}
 	checkLengthOutputString(outputBlock);
-}
-
-function parseOutputString(output) {
-	let outputStr = output.textContent;
-
-	return {
-		operation: outputStr.match(REGEXP_OPERATION),
-		fNum: outputStr.split(REGEXP_OPERATION)[0],
-		sNum: outputStr.split(REGEXP_OPERATION)[1],
-	};
 }
