@@ -1,35 +1,31 @@
 'use strict';
-
-const outputBlock = document.querySelector('.output__block');
-const btnClear = document.querySelector('.btn__clear');
-const btnBackspace = document.querySelector('.btn__backspace');
-const btnsNumb = document.querySelectorAll('.btn__numb');
-const btnsAction = document.querySelectorAll('.btn__action');
-const btnEquals = document.querySelector('.btn__equals');
+import { UI_ELEMENTS } from "./view.js";
 
 const REGEXP_OPERATION = /÷|×|\+|−/gm;
 
-btnsNumb.forEach((btn) => {
+const outputBlock = UI_ELEMENTS.outputBlock;
+
+UI_ELEMENTS.btnsNumb.forEach((btn) => {
 	btn.addEventListener('click', () => {
 		addNumbInOutput(btn, outputBlock);
 	});
 });
 
-btnsAction.forEach((btn) => {
+UI_ELEMENTS.btnsAction.forEach((btn) => {
 	btn.addEventListener('click', () => {
 		addOperationInOutput(btn, outputBlock);
 	});
 });
 
-btnClear.addEventListener('click', () => {
+UI_ELEMENTS.btnClear.addEventListener('click', () => {
 	clickClear(outputBlock);
 });
 
-btnBackspace.addEventListener('click', () => {
+UI_ELEMENTS.btnBackspace.addEventListener('click', () => {
 	clickBackspace(outputBlock);
 });
 
-btnEquals.addEventListener('click', () => {
+UI_ELEMENTS.btnEquals.addEventListener('click', () => {
 	calculate(outputBlock);
 });
 
@@ -118,9 +114,9 @@ function calculate(output) {
 			'÷': +sNum === 0 ? 'cannot divide by zero' : fNum / sNum,
 		};
 
-		outputBlock.textContent = operations[operation];
+		output.textContent = operations[operation];
 	} else {
-		outputBlock.textContent = '0';
+		output.textContent = '0';
 	}
-	checkLengthOutputString(outputBlock);
+	checkLengthOutputString(output);
 }
